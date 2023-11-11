@@ -32,33 +32,33 @@ void image() // fonction qui créer une image en utilisant la fonction rayon ave
 {
     float dif_dir = angle_regard / (float) nb_rayon; //angle de différence entre les rayons
     int long_barre[nb_rayon]; //chaque rayon correspond a une colone de l'affichage et donc cet variable est la longueur du mur dans la colonne de chaque rayon
+    int couleur[nb_rayon];
     float i = regard_j+angle_regard/2; //direction du premier rayon
     for(int t=0;t<nb_rayon;t=t+1){//boucle pour chaque rayon
-        long_barre[t] = (int) roundf((35*taille_ecran)/(rayon(i)*powf(1.5,cosf(regard_j-i)))); //taille de la barre du rayon calluer avec la fonction rayon
+        long_barre[t] = (int) roundf((35*taille_ecran)/(rayon(i)*cosf(regard_j-i))); //taille de la barre du rayon calluer avec la fonction rayon
+        couleur[t] = (long_barre[t]*200/taille_ecran+55);
         // printf("%d : %f ; %d\n",t,i,long_barre[t]);
         i = i-dif_dir; // calcul du prochain rayon
     }
-    char* affichage=(char*)malloc(sizeof(char)*(taille_ecran*nb_rayon*2*13+1)) ; //allocation de la mémoire du string qui va avoir l'image
+    char* affichage=(char*)malloc(sizeof(char)*(taille_ecran*nb_rayon*3*13+1)) ; //allocation de la mémoire du string qui va avoir l'image
     affichage[0] = 0; //intialise la fin du string
     printf("\033[0;0H");
     for (int i = 0; i<taille_ecran; i++){
         for (int l=0; l<nb_rayon; l++){
-            for(int k=0; k<2;k++){
                 if (abs(i-taille_ecran/2)<long_barre[l]){
                     // strncat(affichage,"\033[31m#\033[00m",12);
-                    printf("\033[31m#\033[00m");
+                    printf("\033[48;2;%d;0;0m  ",couleur[l]);
                 }
                 else if (i>taille_ecran/2){
                     // strncat(affichage,"\033[37m%\033[00m",13);
-                    printf("\033[37m%%\033[00m");
+                    printf("\033[47m  ");
                 }else{
                     // strncat(affichage,"\033[34m*\033[00m",12);
-                    printf("\033[34m*\033[00");
+                    printf("\033[44m  ");
                 }
-            }
         }
         // strncat(affichage,"\n",2);
-        printf("\n");
+        printf("\n\e[0");
     }
     printf("%s\n",affichage);
     free(affichage);

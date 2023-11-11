@@ -15,7 +15,7 @@ float regard_j = 3*M_PI/2; //direction du regard du joueur avec un radiant comme
 const float angle_regard = 2*M_PI/4; //angle total du regard
 const int t = 3; // nombre qui plus est grand plus l'affichage sera grand dans le terminal
 const int nb_rayon = 50*t; //nombre de rayon qu'envoie le proagramme à chaque image définit aussi la largeur de l'affichage
-const int taille_ecran = 40*t; // la longueur de l'affichage
+const int taille_ecran = 30*t; // la longueur de l'affichage
 int def_var()
 {
     map =(char**)malloc(sizeof(char*)*l_map[1]);
