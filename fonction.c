@@ -50,7 +50,7 @@ void image() // fonction qui créer une image en utilisant la fonction rayon ave
     }
     bool* sortie = malloc(sizeof(bool)*nb_rayon); // on memorise chaque couleurs des barres de rayons pour ne pas avoir à les calculer
     if (couleur == NULL) {
-        printf( "L'allocation de mémoire a échoué.\n");
+        printf(, "L'allocation de mémoire a échoué.\n");
         exit(EXIT_FAILURE);
     }
     float i = regard_j+angle_regard/2; //direction du premier rayon
