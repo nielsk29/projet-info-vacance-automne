@@ -9,15 +9,21 @@ const int l_map[2] = {27,27}; //taille x et y en carré de la carte
 const int taille_carre = 100; //taille de chaque carré
 const int taille_map[2] = {l_map[0]*taille_carre,l_map[1]*taille_carre}; //taille x et y de la carte
 char** map;
+int nb_rayon; //nombre de rayon qu'envoie le proagramme à chaque image définit aussi la largeur de l'affichage
+int taille_ecran; // la longueur de l'affichage
 
 float pos_j[2] = {1550,50}; //position x et x du joueur
 float regard_j = 3*M_PI/2; //direction du regard du joueur avec un radiant comme si on faisait un cercle trigo autour du joueur
 const float angle_regard = 2*M_PI/4; //angle total du regard
-const int t = 3; // nombre qui plus est grand plus l'affichage sera grand dans le terminal
-const int nb_rayon = 50*t; //nombre de rayon qu'envoie le proagramme à chaque image définit aussi la largeur de l'affichage
-const int taille_ecran = 30*t; // la longueur de l'affichage
-int def_var()
+
+int def_var(int t, int diff)
 {
+    nb_rayon = 50*t; 
+    taille_ecran = 30*t; 
+
+    if (diff == 1) {
+        printf("bug");
+    } else {
     map =(char**)malloc(sizeof(char*)*l_map[1]);
     map[0] = "###############0###########";// carte '#' -> mur ; '0' -> vide
     map[1] = "#0000000000000#000000000#0#";
@@ -46,5 +52,11 @@ int def_var()
     map[24]= "##########0#0#0##########0#";
     map[25]= "00000000000#0#000000000000#";
     map[26]= "###########################";
+    }
+
     
+    if (map == NULL) {
+        printf("L'allocation de mémoire a échoué.\n");
+        exit(EXIT_FAILURE);
+    }
 }
