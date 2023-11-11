@@ -9,7 +9,7 @@
 #include "variable.h"
 
 int main(){
-    def_var();
+    
     // printf("%f\n",rayon(M_PI/6.0));
     // printf("%d", test_carre(pos_j));
     system("clear");
@@ -19,42 +19,104 @@ int main(){
         // printf("%d",getchar());
         image();
     }*/
-    image();
-    while (true){
-        char ex;
-        scanf("%c", &ex);
-        if (ex == 'q'){
-            float fin = regard_j + M_PI/2 + 0.0001;
-            for(float i=regard_j + M_PI/16 ;i<fin;i = i + M_PI/16){
-                regard_j = i ;
-                usleep(10000);
-                // printf("%f , %f\n",i,fin);
-                image();
-            }
-        }
-        if (ex == 'd'){
-            float fin = regard_j - M_PI/2 - 0.0001;
-            for(float i=regard_j - M_PI/16 ;i>fin;i = i - M_PI/16){
-                regard_j = i ;
-                usleep(10000);
-                // printf("%f , %f\n",i,fin);
-                image();
-            }
-        }
-        if (ex == 'z'){
-            for (int i = 0; i<100; i = i+20){
-                pos_j[0] = pos_j[0] +cosf(regard_j)*20;
-                pos_j[1] = pos_j[1] -sinf(regard_j)*20;
-                image();
-            }
-        }
-        if (ex == 's'){
-            for (int i = 0; i<100; i = i+20){
-                pos_j[0] = pos_j[0] -cosf(regard_j)*20;
-                pos_j[1] = pos_j[1] +sinf(regard_j)*20;
-                image();
-            }
-        }
-        ex = '0';
+printf("Choisissez la difficulté du labirynthe: \n 1: Facile \n 2: Difficile \n ");
+    char input;
+    int difficulte;
+
+    scanf("%c", &input);
+    if (input == '1') {
+        difficulte = 1;
     }
+    else if (input == '2') {
+        difficulte = 2;
+    } else {
+        printf("Tu n'es pas très inteligent il faut mettre un nombre entre 1 et 2.\n");
+        exit(2);
+    }
+
+    printf("Choisissez vos parametres graphiques (1, 2, 3 ou 4): \n 1: Bas  \n 2: Moyen \n 3: Eleve \n 4: Cyberpunk \n ATTENTION IL FAUT D ABORD DEZOOM AU MAXIMUM AVANT D APPUYER SUR ENTREE \n");
+    printf("%c",input);
+    char input2;
+    scanf(" %c", &input2);
+
+    if (input2 == '1') {
+        def_var(2, difficulte);
+    }
+    else if (input2 == '2') {
+        def_var(4, difficulte);
+    }
+    else if (input2 == '3') {
+        def_var(6, difficulte);
+    }
+    else if (input2 == '4') {
+        def_var(8, difficulte);
+    }
+    else{
+        printf("Tu n'es pas très inteligent il faut mettre un nombre entre 1 et 4.\n");
+        exit(2);
+    }
+    
+    printf("salut");
+    
+
+    image();
+    while (test_carre_sortie(pos_j)==false){
+        char input;
+        scanf("%c", &input);
+        if (input == 'q'){
+            float fin = regard_j + M_PI/2 + 0.0001;
+            for(float i=regard_j + M_PI/16 ;i<fin;i = i + M_PI/16){ // pour que le mouvement soit progressif
+                regard_j = i ;
+                // usleep(10000);
+                // printf("%f , %f\n",i,fin);
+                image();
+            }
+        }
+        if (input == 'd'){
+            float fin = regard_j - M_PI/2 - 0.0001;
+            for(float i=regard_j - M_PI/16 ;i>fin;i = i - M_PI/16){ // pour que le mouvement soit progressif
+                regard_j = i ;
+                // usleep(10000);
+                // printf("%f , %f\n",i,fin);
+                image();
+            }
+        }
+        if (input == 'z'){
+            float pas_x = cosf(regard_j)*(taille_carre/5);
+            float pas_y = sinf(regard_j)*(taille_carre/5);
+            float future_position_j[2] = {(pos_j[0] + pas_x*5),  (pos_j[1] - pas_y*5)};  // verifie qu'il n'y a pas de murs
+            if (test_carre(future_position_j) == true || test_carre_sortie(future_position_j)) {
+                for (int i = 0; i<100; i = i+20){ // 5 itérations pour que le mouvement soit progressif
+                pos_j[0] = pos_j[0] +pas_x;
+                pos_j[1] = pos_j[1] -pas_y;
+                image();
+            }
+        }
+        }
+        if (input == 's'){
+            float pas_x = cosf(regard_j)*(taille_carre/5);
+            float pas_y = sinf(regard_j)*(taille_carre/5);
+            float future_position_j[2] = {(pos_j[0] - pas_x*5),  (pos_j[1] + pas_y*5)}; // verifie qu'il n'y a pas de murs
+            if (test_carre(future_position_j) == true || test_carre_sortie(future_position_j)) {
+            for (int i = 0; i<100; i = i+20) { // 5 itérations pour que le mouvement soit progressif
+                pos_j[0] = pos_j[0] -pas_x;
+                pos_j[1] = pos_j[1] +pas_y;
+                image();
+            }
+        }
+        }
+        input = '0';
+    }
+    system("clear");
+    printf("\033[38;2;255;255;0m"
+"-----------  --------  ------------ ----    ----      --------      --------   ----    ---- ------------       ------------ ----    ----         ------     ------------     ------------ -----------    --------   ----    ---- ---    ---  ------------       ----            ------         ------------   --------   -----------  ------------ --------  ------------ \n"
+"***********  ********  ************ *****   ****      ********     **********  ****    **** ************       ************ ****    ****        ********    ************     ************ ***********   **********  ****    **** ***    ***  ************       ****           ********        ************  **********  ***********  ************ ********  ************ \n"
+"----       -   ----    ----         ------  ----        ---       ----    ---- ----    ---- ----               ------------ ----    ----       ----------   ----             ------------ ----    ---  ----    ---- ----    ---- ---    ---  ----               ----          ----------       ----         ----    ---- ----    ---  ------------   ----    ----         \n"
+"***********    ****    ************ ************        ***       ***      *** ****    **** ************           ****     ****    ****      ****    ****  ************         ****     *********    ***      *** ****    **** ***    ***  ************       ****         ****    ****      ************ ***      *** *********        ****       ****    ************ \n"
+"-----------    ----    ------------ ------------        ---       ---      --- ----    ---- ------------           ----     ----    ----      ------------  ------------         ----     ---------    ---      --- ----    ---- ---    ---  ------------       ----         ------------      ------------ ---      --- ---------        ----       ----    ------------ \n"
+"****       *   ****    ****         ****  ******        ***   **  ****    **** ************ ****                   ****     ************      ************         *****         ****     ****  ****   ****    **** ************  ********   ****               ************ ************             ***** ****    **** ****  ****       ****       ****    ****         \n"
+"-----------  --------  ------------ ----   -----        --------   ----------  ------------ ------------           ----     ------------      ----    ----  ------------         ----     ----   ----   ----------  ------------   ------    ------------       ------------ ----    ----      ------------  ----------  ----   ----      ----     --------  ------------ \n"
+"***********  ********  ************ ****    ****        ********    ********   ************ *************          ****     ************      ****    ****  ************         ****     ****    ****   ********   ************    ****     ************       ************ ****    ****      ************   ********   ****    ****     ****     ********  ************ \n"
+"\n");
+    free(map);
 }   

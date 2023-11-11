@@ -3,6 +3,8 @@
 
 bool test_carre(float* pos);
 
-float rayon(float direction);
+bool test_carre_sortie(float* pos);
+
+float* rayon(float direction);
 
 void image();
